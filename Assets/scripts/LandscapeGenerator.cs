@@ -13,6 +13,8 @@ public class LandscapeGenerator : MonoBehaviour {
 	public int northSegments = 100;
 	public int eastSegments = 100;
 
+	public float heightScale = 0.001f;
+
 	public TextAsset altitudeData;
 
 	private Mesh mMesh = null;
@@ -52,8 +54,8 @@ public class LandscapeGenerator : MonoBehaviour {
 		var eastStep = eastSpan / eastSegments;
 		var northStep = northSpan / northSegments;
 
-		var heightSum = new float[northSegments + 1, eastSegments + 1];
-		var heightCount = new int[northSegments + 1, eastSegments + 1];
+		var heightSum = new float[eastSegments + 1, northSegments + 1];
+		var heightCount = new int[eastSegments + 1, northSegments + 1];
 
 		var count = 0;
 		var minEast = float.MaxValue;
@@ -123,15 +125,27 @@ public class LandscapeGenerator : MonoBehaviour {
 		var vStep = 1.0f / northSegments;
 		var index = 0;
 		var triIndex = 0;
-		float lastHeight = 0;
 		for (int x = 0; x <= eastSegments; ++x) {
 			var generateTris = x < eastSegments;
+			float? lastHeight = null;
 			for (int y = 0; y <= northSegments; ++y) {
 				var heights = heightCount [x, y];
 				if (heights > 0) {
-					lastHeight = heightSum [x, y] / (heights * 1000.0f);
+					lastHeight = heightSum [x, y] / heights;
+				} else if (!lastHeight.HasValue) {
+					var offset = 0;
+					do {
+						++offset;
+						if (y + offset >= northSegments) {
+							heights = 1;
+							offset = 0;
+						} else {
+							heights = heightCount[x, y + offset];
+						}
+					} while (heights == 0);
+					lastHeight = heightSum[x, y + offset] / heights;
 				}
-				vertices [index] = new Vector3 (x * eastStep, lastHeight, y * northStep);
+				vertices [index] = new Vector3 (x * eastStep, lastHeight.Value * heightScale, y * northStep);
 				normals [index] = Vector3.up;
 				uv [index] = new Vector2 (x * uStep, y * vStep);
 
