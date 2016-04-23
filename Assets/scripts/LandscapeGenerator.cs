@@ -16,8 +16,6 @@ public class LandscapeGenerator : MonoBehaviour {
 	public int northSegments = 100;
 	public int eastSegments = 100;
 
-	public float heightScale = 0.001f;
-
 	public const float MARS_RADIUS = 3396263.0f;
 	public const float METERS_PER_DEGREE = MARS_RADIUS / 360.0f;
 
