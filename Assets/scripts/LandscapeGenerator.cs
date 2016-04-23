@@ -4,16 +4,22 @@ using System.Collections;
 [RequireComponent (typeof (MeshFilter), typeof (MeshRenderer))]
 public class LandscapeGenerator : MonoBehaviour {
 
-	public float northSpan = 10;
-	public float eastSpan = 10;
+	public float NorthSpan { get { return northEnd - northStart; } }
+	public float EastSpan { get { return eastEnd - eastStart; } }
 
 	public float northStart = 0;
 	public float eastStart = 0;
+
+	public float northEnd = 10;
+	public float eastEnd = 10;
 
 	public int northSegments = 100;
 	public int eastSegments = 100;
 
 	public float heightScale = 0.001f;
+
+	public const float MARS_RADIUS = 3396263.0f;
+	public const float METERS_PER_DEGREE = MARS_RADIUS / 360.0f;
 
 	public TextAsset altitudeData;
 
@@ -51,8 +57,11 @@ public class LandscapeGenerator : MonoBehaviour {
 		}
 		Debug.Log ("Generating Mesh");
 
-		var eastStep = eastSpan / eastSegments;
-		var northStep = northSpan / northSegments;
+		var uStep = 1.0f / (eastSegments + 1);
+		var vStep = 1.0f / (northSegments + 1);
+
+		var eastStep = EastSpan * uStep;
+		var northStep = NorthSpan * vStep;
 
 		var heightSum = new float[eastSegments + 1, northSegments + 1];
 		var heightCount = new int[eastSegments + 1, northSegments + 1];
@@ -92,25 +101,31 @@ public class LandscapeGenerator : MonoBehaviour {
 				minHeight = Mathf.Min (minHeight, height);
 				maxHeight = Mathf.Max (maxHeight, height);
 
-				if (east < eastStart || eastStart + eastSpan + eastStep < east) {
+				if (east < eastStart || eastEnd <= east) {
 					continue;
 				}
 
-				if (north < northStart || northStart + northSpan + northStep < north) {
+				if (north < northStart || northEnd <= north) {
 					continue;
 				}
 
 				var x = (int) ((east - eastStart) / eastStep);
 				var y = (int) ((north - northStart) / northStep);
+				if (x < 0 || y < 0) {
+					Debug.Log ("Sub-zero");
+				}
+				if (x >= eastSegments + 1 || y >= northSegments + 1) {
+					Debug.Log ("Super-zero: " + x + ", " + y);
+				}
 				heightSum [x, y] += height;
 				heightCount [x, y] += 1;
 			}
 		}
 
 		Debug.Log ("Lines: " + count);
-		Debug.Log (string.Format ("{0} - {1}", minEast, maxEast - minEast));
-		Debug.Log (string.Format ("{0} - {1}", minNorth, maxNorth - minNorth));
-		Debug.Log (string.Format ("{0} - {1}", minHeight, maxHeight - minHeight));
+		Debug.Log (string.Format ("{0} - {1}", minEast, maxEast));
+		Debug.Log (string.Format ("{0} - {1}", minNorth, maxNorth));
+		Debug.Log (string.Format ("{0} - {1}", minHeight, maxHeight));
 
 		var mf = GetComponent<MeshFilter>();
 		mMesh = new Mesh();
@@ -121,8 +136,6 @@ public class LandscapeGenerator : MonoBehaviour {
 		var normals = new Vector3[VertexCount];
 		var uv = new Vector2[VertexCount];
 
-		var uStep = 1.0f / eastSegments;
-		var vStep = 1.0f / northSegments;
 		var index = 0;
 		var triIndex = 0;
 		for (int x = 0; x <= eastSegments; ++x) {
@@ -145,7 +158,11 @@ public class LandscapeGenerator : MonoBehaviour {
 					} while (heights == 0);
 					lastHeight = heightSum[x, y + offset] / heights;
 				}
-				vertices [index] = new Vector3 (x * eastStep, lastHeight.Value * heightScale, y * northStep);
+				vertices [index] = new Vector3 (
+					x * eastStep * METERS_PER_DEGREE,
+					lastHeight.Value,
+					y * northStep * METERS_PER_DEGREE
+				);
 				normals [index] = Vector3.up;
 				uv [index] = new Vector2 (x * uStep, y * vStep);
 
