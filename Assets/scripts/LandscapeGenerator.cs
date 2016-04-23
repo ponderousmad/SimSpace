@@ -4,10 +4,21 @@ using System.Collections;
 [RequireComponent (typeof (MeshFilter), typeof (MeshRenderer))]
 public class LandscapeGenerator : MonoBehaviour {
 
-	public float north = 10;
-	public float west = 10;
+	public float northSpan = 10;
+	public float westSpan = 10;
+
+	public int northSegments = 100;
+	public int westSegments = 100;
 
 	private Mesh mMesh = null;
+
+	private int VertexCount {
+		get { return (1 + northSegments) * (1 + westSegments); }
+	}
+
+	private int TriangleCount {
+		get { return (northSegments * westSegments * 2); }
+	}
 
 	[ContextMenu ("Generate")]
 	void DoGenerate () {
@@ -36,45 +47,41 @@ public class LandscapeGenerator : MonoBehaviour {
 		var mf = GetComponent<MeshFilter>();
 		mMesh = new Mesh();
 		mf.mesh = mMesh;
-		var vertices = new Vector3[4];
+		const int TRI_VERTS = 3;
+		var vertices = new Vector3[VertexCount];
+		var tri = new int[TriangleCount * TRI_VERTS];
+		var normals = new Vector3[VertexCount];
+		var uv = new Vector2[VertexCount];
 
-		vertices[0] = new Vector3(0, 0, 0);
-		vertices[1] = new Vector3(west, 0, 0);
-		vertices[2] = new Vector3(0, 0, north);
-		vertices[3] = new Vector3(west, 0, north);
+		var westStep = westSpan / westSegments;
+		var northStep = northSpan / northSegments;
+		var uStep = 1.0f / westSegments;
+		var vStep = 1.0f / northSegments;
+		var index = 0;
+		var triIndex = 0;
+		for (int x = 0; x <= westSegments; ++x) {
+			var generateTris = x < westSegments;
+			for (int y = 0; y <= northSegments; ++y) {
+				vertices [index] = new Vector3 (x * westStep, 0, y * northStep);
+				normals [index] = Vector3.up;
+				uv [index] = new Vector2 (x * uStep, y * vStep);
 
+				if (generateTris && y < northSegments) {
+					tri [triIndex + 0] = index;
+					tri [triIndex + 1] = index + 1;
+					tri [triIndex + 2] = index + northSegments + 1;
+					triIndex += TRI_VERTS;
+					tri [triIndex + 0] = index + 1;
+					tri [triIndex + 1] = index + northSegments + 2;
+					tri [triIndex + 2] = index + northSegments + 1;
+					triIndex += TRI_VERTS;
+				}
+				++index;
+			}
+		}
 		mMesh.vertices = vertices;
-
-		var tri = new int[6];
-
-		//  Lower left triangle.
-		tri[0] = 0;
-		tri[1] = 2;
-		tri[2] = 1;
-
-		//  Upper right triangle.   
-		tri[3] = 2;
-		tri[4] = 3;
-		tri[5] = 1;
-
 		mMesh.triangles = tri;
-
-		var normals = new Vector3[4];
-
-		normals[0] = -Vector3.forward;
-		normals[1] = -Vector3.forward;
-		normals[2] = -Vector3.forward;
-		normals[3] = -Vector3.forward;
-
 		mMesh.normals = normals;
-
-		var uv = new Vector2[4];
-
-		uv[0] = new Vector2(0, 0);
-		uv[1] = new Vector2(1, 0);
-		uv[2] = new Vector2(0, 1);
-		uv[3] = new Vector2(1, 1);
-
 		mMesh.uv = uv;
 
 		mMesh.RecalculateBounds();
