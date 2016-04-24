@@ -542,6 +542,7 @@ GameObject:
   - 124: {fileID: 498760415}
   - 81: {fileID: 498760414}
   - 45: {fileID: 498760419}
+  - 114: {fileID: 498760420}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -624,6 +625,26 @@ Skybox:
   m_GameObject: {fileID: 498760413}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: e222162ddb8d34547a133b673221b195, type: 2}
+--- !u!114 &498760420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 498760413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Radius: 0.5
+  m_SampleCount: 2
+  m_OcclusionIntensity: 3
+  m_Blur: 2
+  m_Downsampling: 1
+  m_OcclusionAttenuation: 1
+  m_MinZ: 0.01
+  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
+  m_RandomTexture: {fileID: 0}
 --- !u!1 &526377180
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,6 +3276,10 @@ Prefab:
     - target: {fileID: 11442846, guid: e4d917e2c1a9c43789cbf38768e2baf9, type: 2}
       propertyPath: startDelay
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 19880970, guid: e4d917e2c1a9c43789cbf38768e2baf9, type: 2}
+      propertyPath: InitialModule.startColor.maxColor.rgba
+      value: 4287874040
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e4d917e2c1a9c43789cbf38768e2baf9, type: 2}
