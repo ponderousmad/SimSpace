@@ -41,9 +41,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23501a863adc24d8aac02216f30919a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 30
+  startDelay: 60
   rampTime: 25
   fogDensity: 0.1
+  dim: 0.25
+  daylight: {fileID: 0}
 --- !u!198 &19880970
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -239,7 +241,7 @@ ParticleSystem:
         rgba: 4285639916
       maxColor:
         serializedVersion: 2
-        rgba: 4286888178
+        rgba: 4287874040
       minMaxState: 2
     startSize:
       scalar: 100

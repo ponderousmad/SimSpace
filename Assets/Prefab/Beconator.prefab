@@ -49,7 +49,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2feff7b2f63d6494890e11df73eef984, type: 3}
   - {fileID: 8300000, guid: 73abd55a5c15644f38d929fe054f731e, type: 3}
   period: 1
-  beaconPrefab: {fileID: 0}
+  collectDistance: 2
+  keepDistance: 5
+  beaconPrefab: {fileID: 126080, guid: c69e3913cef2246618b0176eef0ecd77, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -61,6 +63,10 @@ Prefab:
       propertyPath: period
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: beaconPrefab
+      value: 
+      objectReference: {fileID: 126080, guid: c69e3913cef2246618b0176eef0ecd77, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 124142}
