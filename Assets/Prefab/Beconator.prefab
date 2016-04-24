@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &124142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 450574}
+  - 114: {fileID: 11486032}
+  m_Layer: 0
+  m_Name: Beconator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &450574
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124142}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 183.36772, y: 74.93245, z: 256.88367}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11486032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d59d8529605741cd8c0643fede9901e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tones:
+  - {fileID: 8300000, guid: 4b54d297a310c4846bab1b916a045190, type: 3}
+  - {fileID: 8300000, guid: 3f9b8cafe26404146961615c26ba488e, type: 3}
+  - {fileID: 8300000, guid: fd891f8a1155a44a7bd7d90aedba5710, type: 3}
+  - {fileID: 8300000, guid: 11577af9eb9b74917bc8939f72c4d226, type: 3}
+  - {fileID: 8300000, guid: 26d28c08bce4f4cceaaf31aa4d6125ae, type: 3}
+  - {fileID: 8300000, guid: 69539dfbda1dd40edb92e1432bcd8431, type: 3}
+  - {fileID: 8300000, guid: 2feff7b2f63d6494890e11df73eef984, type: 3}
+  - {fileID: 8300000, guid: 73abd55a5c15644f38d929fe054f731e, type: 3}
+  period: 1
+  beaconPrefab: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: period
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 124142}
+  m_IsPrefabParent: 1
