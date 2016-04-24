@@ -11,6 +11,8 @@ Rover Model adapted from Viking Lander: http://nasa3d.arc.nasa.gov/detail/viking
 
 Hab Model: http://nasa3d.arc.nasa.gov/detail/nmss-hdu
 
+Textures derived from: http://www.nasa.gov/mission_pages/mars/images/index.html
+
 ### Terrain Data from HIRISE:
 
 Terrain 1: Bullseye Crater:
