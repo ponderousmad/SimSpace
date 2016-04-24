@@ -9,6 +9,8 @@ Virtual Reality Mars Rover experience.
 
 Rover Model adapted from Viking Lander: http://nasa3d.arc.nasa.gov/detail/viking-c
 
+Hab Model: http://nasa3d.arc.nasa.gov/detail/nmss-hdu
+
 ### Terrain Data from HIRISE:
 
 Terrain 1: Bullseye Crater:
