@@ -4,9 +4,15 @@ using System.Collections;
 
 public class GenerateBlock : MonoBehaviour
 {
-    public Direction generateDirection;
-    public GameObject targetParent;
+    public Direction        generateDirection;
+    public CheckRemovalBox  targetParent;
     bool mTriggered;
+    GameObject mCar;
+
+    void Start()
+    {
+        name = generateDirection.ToString();
+    }
 
     public enum Direction
     {
@@ -18,12 +24,14 @@ public class GenerateBlock : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("other name: " + other.name);
-        if(string.Equals("ColliderBody", other.name) && LevelBockGenerate.instance && !mTriggered)
+        bool carHit = string.Equals("ColliderBody", other.name);
+        if (carHit && LevelBockGenerate.instance && !mTriggered)
         {
-            Debug.Log("Create");
+            mCar = other.gameObject;
+            targetParent.CarPassed(mCar);
             mTriggered = true;
             LevelBockGenerate.instance.GenerateNewBlock(targetParent, generateDirection);
+            return;
         }
     }
 }
