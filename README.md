@@ -1,7 +1,7 @@
-# SimSpace
+# Lost On Mars
 Entry for Nasa Space Apps 2016
 
-Virtual Reality Mars Rover experience.
+[Virtual Reality Mars Rover experience](https://ponderousmad.com/lost-on-mars/play.html).
 
 ##Resources Used
 
