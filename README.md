@@ -3,6 +3,8 @@ Entry for Nasa Space Apps 2016
 
 [Virtual Reality Mars Rover experience](https://ponderousmad.com/lost-on-mars/play.html).
 
+[Screenshots and more information](https://docs.google.com/presentation/d/1FY9hcGKDyyYILS06JRFM70J71cZhWovJEg7Fy7BvVps/edit?usp=sharing).
+
 ##Resources Used
 
 ### Models
